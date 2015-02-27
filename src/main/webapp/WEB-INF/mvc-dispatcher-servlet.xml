@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:security="http://www.springframework.org/schema/security"
+<beans xmlns:security="http://www.springframework.org/schema/security"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
@@ -10,19 +10,27 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-       <mvc:annotation-driven/>
-       <mvc:resources mapping="/" location="/WEB-INF/jsp/"/>
-       <mvc:resources mapping="/**" location="/WEB-INF/jsp/"/>
-       <security:http auto-config="true">
-              <security:intercept-url pattern="/**" access="ROLE_USER"/>
-       </security:http>
+    <mvc:annotation-driven/>
 
-       <security:authentication-manager>
-              <security:authentication-provider>
-                     <security:user-service>
-                            <security:user name="jimi" password="jimipassword" authorities="ROLE_USER,ROLE_ADMIN"/>
-                            <security:user name="bob" password="bobspassword" authorities="ROLE_USER" />
-                     </security:user-service>
-              </security:authentication-provider>
-       </security:authentication-manager>
+    <mvc:view-controller path="/" view-name="index"/>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <security:http auto-config="true">
+        <security:intercept-url pattern="/**" access="ROLE_USER"/>
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="jimi" password="jimipassword" authorities="ROLE_USER,ROLE_ADMIN"/>
+                <security:user name="bob" password="bobspassword" authorities="ROLE_USER"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
 </beans>
