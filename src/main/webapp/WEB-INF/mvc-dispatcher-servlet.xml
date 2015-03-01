@@ -2,17 +2,17 @@
 <beans xmlns:security="http://www.springframework.org/schema/security"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <mvc:annotation-driven/>
 
-    <context:component-scan base-package="com.maxsitu.web.controller"/>
+    <!--<context:component-scan base-package="com.maxsitu.web.controller"/>-->
 
     <mvc:view-controller path="/" view-name="index"/>
     <mvc:view-controller path="/login" view-name="login"/>
@@ -27,13 +27,18 @@
     <security:http pattern="/login" security="none"/>
 
     <security:http>
+        <security:intercept-url pattern="/bullshit" access="ROLE_ADMIN"/>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
-        <security:session-management invalid-session-url="/"/>
-        <security:form-login login-page="/login" default-target-url="/" always-use-default-target="true"/>
+        <security:session-management invalid-session-url="/" session-fixation-protection="newSession"
+                                     session-authentication-error-url="/login">
+            <security:concurrency-control max-sessions="1"/>
+        </security:session-management>
+        <security:form-login login-page="/login" default-target-url="/"/>
         <security:http-basic/>
         <security:logout invalidate-session="true"/>
     </security:http>
 
+    <security:global-method-security jsr250-annotations="enabled"/>
 
     <security:authentication-manager>
         <security:authentication-provider>

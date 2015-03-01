@@ -10,6 +10,6 @@ public class SessionController {
 
     @RequestMapping(value = "invalidSession", method = RequestMethod.GET)
     public String invalidSession() {
-        return "spring_security_login";
+        return "login";
     }
 }
