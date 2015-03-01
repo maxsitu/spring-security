@@ -13,6 +13,7 @@
     <mvc:annotation-driven/>
 
     <!--<context:component-scan base-package="com.maxsitu.web.controller"/>-->
+    <!-- Add this line to make some change in adapting to pivotaltracker -->
 
     <mvc:view-controller path="/" view-name="index"/>
     <mvc:view-controller path="/login" view-name="login"/>
