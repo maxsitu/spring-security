@@ -2,17 +2,21 @@
 <beans xmlns:security="http://www.springframework.org/schema/security"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <mvc:annotation-driven/>
 
+    <context:component-scan base-package="com.maxsitu.web.controller"/>
+
     <mvc:view-controller path="/" view-name="index"/>
+    <mvc:view-controller path="/login" view-name="login"/>
+    <mvc:view-controller path="/bullshit" view-name="bullshit"/>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -20,16 +24,24 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <security:http pattern="/login" security="none"/>
 
-    <security:http auto-config="true">
+    <security:http>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
+        <security:session-management invalid-session-url="/"/>
+        <security:form-login login-page="/login" default-target-url="/"/>
+        <security:http-basic/>
+        <security:logout invalidate-session="true"/>
     </security:http>
+
 
     <security:authentication-manager>
         <security:authentication-provider>
+            <security:password-encoder hash="sha"/>
             <security:user-service>
-                <security:user name="jimi" password="jimipassword" authorities="ROLE_USER,ROLE_ADMIN"/>
-                <security:user name="bob" password="bobspassword" authorities="ROLE_USER"/>
+                <security:user name="jimi" password="16fdcf1897bfa2e66773ff50e6c95e975242a9a5"
+                               authorities="ROLE_USER,ROLE_ADMIN"/>
+                <security:user name="bob" password="b3a4a10c729f8c88d435f4da5b02e8a48d901bbe" authorities="ROLE_USER"/>
             </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>

@@ -12,14 +12,18 @@
         <finalName>spring-security</finalName>
         <plugins>
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.26</version>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.9.v20150224</version>
                 <configuration>
                     <scanIntervalSeconds>3</scanIntervalSeconds>
                     <webApp>
-                        <conteextPath>/spring-security</conteextPath>
+                        <contextPath>/spring-security</contextPath>
                     </webApp>
+                    <!--<jettyXml>${project.basedir}/src/jetty/jetty.xml,${project.basedir}/src/jetty/jetty-ssl.xml,${project.basedir}/src/jetty/jetty-https.xml</jettyXml>-->
+                    <scanTargets>
+                        <scanTarget>src/main/webapp/WEB-INF</scanTarget>
+                    </scanTargets>
                 </configuration>
             </plugin>
         </plugins>
@@ -78,6 +82,11 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 </project>
