@@ -20,7 +20,6 @@
                     <webApp>
                         <contextPath>/spring-security</contextPath>
                     </webApp>
-                    <!--<jettyXml>${project.basedir}/src/jetty/jetty.xml,${project.basedir}/src/jetty/jetty-ssl.xml,${project.basedir}/src/jetty/jetty-https.xml</jettyXml>-->
                     <scanTargets>
                         <scanTarget>src/main/webapp/WEB-INF</scanTarget>
                     </scanTargets>

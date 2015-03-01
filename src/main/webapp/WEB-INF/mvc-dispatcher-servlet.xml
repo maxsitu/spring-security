@@ -29,7 +29,7 @@
     <security:http>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
         <security:session-management invalid-session-url="/"/>
-        <security:form-login login-page="/login" default-target-url="/"/>
+        <security:form-login login-page="/login" default-target-url="/" always-use-default-target="true"/>
         <security:http-basic/>
         <security:logout invalidate-session="true"/>
     </security:http>
